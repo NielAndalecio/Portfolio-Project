@@ -1,0 +1,20 @@
+name: Test deploy
+
+on:
+  push:
+    branches: test_deploy
+
+jobs:
+  echo_secret:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Generate creds
+        run: |
+          echo BART_KNOX_ID="${{secrets.BART_KNOX_ID}}" > gradle.properties
+          echo BART_API_KEY="${{secrets.BART_API_KEY}}" >> gradle.properties
+
+      - name: display creds
+        run: cat gradle.properties
